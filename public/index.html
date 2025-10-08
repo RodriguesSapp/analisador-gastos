@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Analisador de Gastos</title>
+</head>
+<body>
+  <h1>Analisador de Gastos</h1>
+
+  <form id="formGasto">
+    <input type="text" id="descricao" placeholder="Descrição" required />
+    <input type="number" id="valor" placeholder="Valor" required />
+    <input type="text" id="categoria" placeholder="Categoria" required />
+    <input type="date" id="data" required />
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <h2>Gastos:</h2>
+  <ul id="listaGastos"></ul>
+
+  <script>
+    const form = document.getElementById('formGasto');
+    const lista = document.getElementById('listaGastos');
+
+    async function carregarGastos() {
+      const res = await fetch('http://localhost:3000/gastos');
+      const dados = await res.json();
+      lista.innerHTML = dados.map(g => `<li>${g.descricao} - R$${g.valor}</li>`).join('');
+    }
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const gasto = {
+        descricao: descricao.value,
+        valor: parseFloat(valor.value),
+        categoria: categoria.value,
+        data: data.value
+      };
+      await fetch('http://localhost:3000/gastos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(gasto)
+      });
+      form.reset();
+      carregarGastos();
+    });
+
+    carregarGastos();
+  </script>
+</body>
+</html>
