@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Analisador de Gastos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Usuário" required />
+      <input type="password" id="password" placeholder="Senha" required />
+      <button type="submit">Entrar</button>
+    </form>
+    <p id="msg" class="msg"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const msg = document.getElementById("msg");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        window.location.href = "/index"; // redireciona pro index
+      } else {
+        msg.textContent = data.message;
+        msg.style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>
