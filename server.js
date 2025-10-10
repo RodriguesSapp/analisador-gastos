@@ -27,17 +27,17 @@ function checkLogin(req, res, next) {
   else res.redirect("/login");
 }
 
-//  Rota raiz → sempre vai para o login
+
 app.get("/", (req, res) => {
   res.redirect("/login");
 });
 
-//  Página de login (acesso livre)
+
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 
-//  Fazer login
+
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   if (username === USER.username && password === USER.password) {
@@ -48,17 +48,17 @@ app.post("/login", (req, res) => {
   }
 });
 
-//  Página protegida
+
 app.get("/index", checkLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-//  Logout
+
 app.get("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/login"));
 });
 
-//  Rotas de gastos
+
 app.get("/gastos", checkLogin, async (req, res) => {
   const db = await openDb();
   const gastos = await db.all("SELECT * FROM gastos");
@@ -75,7 +75,7 @@ app.post("/gastos", checkLogin, async (req, res) => {
   res.json({ status: "ok" });
 });
 
-//  Só aqui colocamos os arquivos estáticos!
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(3000, () => {
