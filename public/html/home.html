@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisador de Gastos</title>
+  <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+  <header>
+    <h1>Analisador de Gastos</h1>
+  </header>
+
+  <main>
+    <div class="intro-container" id="homeIntro">
+      <h2>Organize suas finanças de forma simples</h2>
+      <p>O Analisador de Gastos te ajuda a acompanhar suas despesas, categorizar seus gastos e tomar decisões financeiras inteligentes.</p>
+      <a href="/login" class="btn">Entrar</a>
+      <a href="#" class="btn" id="btnRegister">Cadastrar</a>
+    </div>
+
+    <div class="features">
+      <div class="card">
+        <h3>Adicionar Gastos</h3>
+        <p>Registre rapidamente suas despesas com detalhes como valor, categoria e data.</p>
+      </div>
+      <div class="card">
+        <h3>Visualizar Histórico</h3>
+        <p>Acompanhe todos os gastos de forma organizada e fácil de consultar.</p>
+      </div>
+      <div class="card">
+        <h3>Filtrar e Categorizar</h3>
+        <p>Encontre gastos específicos filtrando por categoria ou período.</p>
+      </div>
+      <div class="card">
+        <h3>Interface Intuitiva</h3>
+        <p>Uma experiência agradável com design limpo, tons suaves e responsivo.</p>
+      </div>
+    </div>
+
+    <!-- Formulário de cadastro (oculto inicialmente) -->
+    <div class="intro-container" id="registerFormContainer" style="display:none;">
+      <h2>Cadastro de Usuário</h2>
+      <form id="registerForm">
+        <input type="text" name="username" placeholder="Usuário" required>
+        <input type="email" name="email" placeholder="E-mail" required>
+        <input type="password" name="password" placeholder="Senha" required>
+        <input type="password" name="confirmPassword" placeholder="Confirme a Senha" required>
+        <button type="submit">Cadastrar</button>
+        <p class="error" id="registerError"></p>
+        <p class="success" id="registerSuccess"></p>
+      </form>
+      <a href="#" id="btnBackToHome">Voltar</a>
+    </div>
+
+    <div class="info-section">
+      <p>Versão 1.0 - Desenvolvido por Matheus. Explore e melhore sua gestão financeira!</p>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 Analisador de Gastos
+  </footer>
+
+  <script src="/js/home.js" defer></script>
+</body>
+</html>

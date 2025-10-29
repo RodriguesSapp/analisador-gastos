@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Analisador de Gastos</title>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+  <div class="login-container">
+    <h2>Bem-vindo ao Analisador de Gastos</h2>
+    <p class="subtitulo">Faça login para acessar seu painel</p>
+    
+    <form id="loginForm">
+      <input type="text" name="username" placeholder="Usuário" required>
+      <input type="password" name="password" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+      <p class="error" id="errorMsg"></p>
+    </form>
+
+    <p class="info">Usuário de teste: <strong>admin</strong> | Senha: <strong>1234</strong></p>
+    <p><a href="#">Esqueci minha senha</a></p>
+    <footer>Versão 1.0 - Desenvolvido por Matheus</footer>
+  </div>
+
+  <script src="/js/login.js" defer></script>
+</body>
+</html>

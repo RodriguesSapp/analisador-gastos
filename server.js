@@ -1,3 +1,4 @@
+// server.js
 import express from "express";
 import path from "path";
 import cors from "cors";
@@ -10,6 +11,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+// --- Middlewares globais ---
 app.use(cors());
 app.use(bodyParser.json());
 app.use(session({
@@ -18,25 +21,37 @@ app.use(session({
   saveUninitialized: true,
 }));
 
+// --- Servir arquivos estáticos antes de tudo ---
+app.use(express.static(path.join(__dirname, "public")));
+
+// --- Inicializa banco ---
 await initDb();
 
+// --- Usuário fixo para login temporário ---
 const USER = { username: "admin", password: "1234" };
 
+// --- Middleware de autenticação ---
 function checkLogin(req, res, next) {
   if (req.session && req.session.user) next();
   else res.redirect("/login");
 }
 
+// --- Rotas públicas ---
 
-app.get("/", (req, res) => {
-  res.redirect("/login");
+// Rota pública inicial
+app.get("/home", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "html", "home.html"));
 });
 
+
+app.get("/", (req, res) => res.redirect("/home"));
+
+
+app.get("/", (req, res) => res.redirect("/login"));
 
 app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
+  res.sendFile(path.join(__dirname, "public", "html", "login.html"));
 });
-
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -48,16 +63,14 @@ app.post("/login", (req, res) => {
   }
 });
 
-
-app.get("/index", checkLogin, (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
-
 app.get("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/login"));
 });
 
+// --- Rotas protegidas ---
+app.get("/index", checkLogin, (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "html", "index.html"));
+});
 
 app.get("/gastos", checkLogin, async (req, res) => {
   const db = await openDb();
@@ -75,9 +88,7 @@ app.post("/gastos", checkLogin, async (req, res) => {
   res.json({ status: "ok" });
 });
 
-
-app.use(express.static(path.join(__dirname, "public")));
-
-app.listen(3000, () => {
-  console.log("✅ Servidor rodando em http://localhost:3000");
+// --- Iniciar servidor ---
+app.listen(5000, () => {
+  console.log("✅ Servidor rodando em http://localhost:5000");
 });
